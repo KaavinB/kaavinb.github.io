@@ -106,6 +106,48 @@
             background-color: var(--secondary-color);
             color: #fff;
         }
+        .project-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .project-item {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .project-item:hover {
+            transform: scale(1.05);
+        }
+        .project-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(44, 62, 80, 0.8);
+            color: #fff;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .project-item:hover .project-overlay {
+            transform: translateY(0);
+        }
+        .project-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
         @media (max-width: 768px) {
             header {
                 padding: 40px 0;
@@ -171,26 +213,35 @@
 
         <section class="section" id="projects">
             <h2>Key Projects</h2>
-            <div class="project-item">
-                <h3>Facial Recognition Attendance System</h3>
-                <p>Developed a facial recognition system using Python and OpenCV. Led a team of 4 to integrate the model into an Android app for efficient attendance tracking, reducing the time from 10 minutes to 3 minutes.</p>
-            </div>
-            <div class="project-item">
-                <h3>COVID-19 Detection Using Chest X-Rays</h3>
-                <p>Utilized CNN and TensorFlow to build a detection system that classifies chest X-rays for COVID-19 with high accuracy, contributing to the open-source community.</p>
-            </div>
-            <div class="project-item">
-                <h3>Real-time Spam Detection</h3>
-                <p>Built a spam detection system using NLP and Logistic Regression with TF-IDF feature extraction, achieving 96.7% accuracy on training data and 96.5% on test data. Integrated the system with Gmail API for real-time email scanning.</p>
+            <div class="project-gallery">
+                <a href="https://github.com/prathyuma-08/VIT-Digital-Attendance-System" class="project-item" target="_blank">
+                    <img src="/static/attsys.jpg" alt="Facial Recognition Attendance System">
+                    <div class="project-overlay">
+                        <div class="project-title">Facial Recognition Attendance System</div>
+                        <p>Developed using Python and OpenCV, integrated into an Android app.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/KaavinB/COVID-19-Detection-using-X-ray" class="project-item" target="_blank">
+                    <img src="/static/xray.jpeg" alt="COVID-19 Detection Using Chest X-Rays">
+                    <div class="project-overlay">
+                        <div class="project-title">COVID-19 X-Ray Detection</div>
+                        <p>CNN and TensorFlow-based system for classifying chest X-rays.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/KaavinB/Realtime_Spam_Detection" class="project-item" target="_blank">
+                    <img src="/static/spam.png" alt="Real-time Spam Detection">
+                    <div class="project-overlay">
+                        <div class="project-title">Real-time Spam Detection</div>
+                        <p>NLP and Logistic Regression-based system integrated with Gmail API.</p>
+                    </div>
+                </a>
             </div>
         </section>
 
-        <section class="section" id="publications">
-            <h2>Publications</h2>
-            <div class="project-item">
-                <p>Gajendran, S., Logeswari, G., Balasubramanian, K., Kumar, C.U.O., and Thangaramya, K. "Enhancing Drug Repositioning Through Collaborative Metric Learning: A Novel Approach." <em>2024 3rd International Conference on Artificial Intelligence for IoT</em> (2024): 1-6.</p>
-            </div>
-        </section>
+                <section id="publications" class="publications">
+    <h2>Publications</h2>
+    <p>Gajendran, S., Logeswari, G., Balasubramanian, K., Kumar, C.U.O., and Thangaramya, K. "Enhancing Drug Repositioning Through Collaborative Metric Learning: A Novel Approach." <em>2024 3rd International Conference on Artificial Intelligence for IoT</em> (2024): 1-6.</p>
+</section>
 
         <section class="section" id="certifications">
             <h2>Certifications</h2>
