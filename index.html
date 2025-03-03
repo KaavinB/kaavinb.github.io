@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Warmer, more personal color palette */
             --primary: #3b82f6;
             --primary-dark: #2563eb;
             --secondary: #60a5fa;
@@ -20,13 +19,11 @@
             --warm-accent: #fde68a;
             --success: #059669;
             
-            /* Softer shadows */
             --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(14, 14, 44, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(14, 14, 44, 0.1);
         }
 
-        /* Personalized header */
         header {
             background: linear-gradient(-45deg, #3b82f6, #60a5fa, #93c5fd, #bfdbfe);
             background-size: 400% 400%;
@@ -48,7 +45,6 @@
             transform: rotate(15deg);
         }
 
-        /* Fun accent elements */
         .section::before {
             content: '';
             position: absolute;
@@ -66,7 +62,6 @@
             opacity: 1;
         }
 
-        /* About section personalization */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -99,7 +94,6 @@
             color: var(--primary);
         }
 
-        /* Project cards with personality */
         .project-item {
             border: 1px solid rgba(59,130,246,0.1);
         }
@@ -124,7 +118,6 @@
             gap: 0.25rem;
         }
 
-        /* Personalized tech stack */
         .tech-item {
             position: relative;
             overflow: hidden;
@@ -146,7 +139,6 @@
             transform: translateX(100%);
         }
 
-        /* More engaging experience section */
         .experience-item {
             border-left: 3px solid var(--primary);
             padding-left: 1.5rem;
@@ -164,7 +156,6 @@
             background: var(--primary);
         }
 
-        /* Add this to your existing styles */
         .interests {
             display: flex;
             flex-wrap: wrap;
@@ -211,7 +202,6 @@
             padding: 0 2rem;
         }
 
-        /* Enhanced header with gradient animation */
         header {
             background: linear-gradient(-45deg, var(--primary), var(--secondary), var(--primary-dark), var(--accent));
             background-size: 400% 400%;
@@ -227,7 +217,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Modern typography */
         h1 {
             font-size: 3.5rem;
             font-weight: 700;
@@ -244,7 +233,6 @@
             opacity: 0.9;
         }
 
-        /* Refined section styling */
         .section {
             background: var(--surface);
             margin: 2rem 0;
@@ -277,7 +265,6 @@
             background: linear-gradient(to right, var(--accent), transparent);
         }
 
-        /* Enhanced skills section */
         .skills {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -301,7 +288,6 @@
             filter: brightness(110%);
         }
 
-        /* Modernized project gallery */
         .project-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -350,7 +336,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Enhanced publication styling */
         .publication-item {
             padding: 1.5rem;
             background: linear-gradient(to right, rgba(37,99,235,0.1), transparent);
@@ -368,7 +353,6 @@
             font-size: 0.9rem;
         }
 
-        /* Modern links section */
         .links {
             display: flex;
             gap: 1rem;
@@ -392,7 +376,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* Certifications enhancement */
         .section ul {
             list-style: none;
         }
@@ -420,7 +403,6 @@
             color: var(--primary);
         }
 
-        /* Experience items enhancement */
         .experience-item {
             padding: 1.5rem;
             background: linear-gradient(to right, rgba(37,99,235,0.05), transparent);
@@ -439,7 +421,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Responsive design improvements */
         @media (max-width: 768px) {
             header {
                 padding: 6rem 0 4rem;
@@ -462,12 +443,10 @@
             }
         }
 
-        /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Loading animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -545,7 +524,6 @@
             opacity: 0.8;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .tech-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -731,7 +709,6 @@
     </main>
 
     <script>
-        // Enhanced smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -742,7 +719,6 @@
             });
         });
 
-        // Add animation delay to sections
         document.querySelectorAll('.section').forEach((section, index) => {
             section.style.setProperty('--index', index);
         });
