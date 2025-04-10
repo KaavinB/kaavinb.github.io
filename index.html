@@ -464,6 +464,8 @@
             font-weight: 700;
             margin-bottom: 2rem;
             position: relative;
+            display: inline-block;
+            min-height: 4rem;
         }
 
         .connect-title::after {
@@ -759,11 +761,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section, .project-item, .tech-stack, .experience-item, .connect-section');
-            
+            const heroTitle = document.querySelector('.hero-title');
+            const heroText = "Kaavin Balasubramanian";
+            const connectTitle = document.querySelector('.connect-title');
+            const connectText = "Let's Connect";
+            let connectTitleTyped = false;
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+
+                        // Check if the intersecting element is the connect section and if typing hasn't started
+                        if (entry.target.classList.contains('connect-section') && !connectTitleTyped) {
+                            connectTitleTyped = true; // Mark as started
+                            typeWriter(connectTitle, connectText);
+                        }
                     }
                 });
             }, {
@@ -774,6 +787,27 @@
             sections.forEach(section => {
                 observer.observe(section);
             });
+
+            // Typing Function
+            function typeWriter(element, text, i = 0, callback) {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    setTimeout(() => typeWriter(element, text, i + 1, callback), 80); // Adjusted speed slightly
+                } else {
+                    if (callback) setTimeout(callback, 100); // Delay callback slightly if needed
+                }
+            }
+
+            // Clear initial text and start typing animation for Hero Title
+            if(heroTitle) {
+                heroTitle.textContent = '';
+                typeWriter(heroTitle, heroText);
+            }
+
+            // Clear the connect title initially for its animation
+            if(connectTitle) {
+                connectTitle.textContent = '';
+            }
 
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -796,7 +830,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">Kaavin Balasubramanian</h1>
+                    <h1 class="hero-title"><!-- Text will be typed here --></h1>
                     <p class="hero-subtitle">AI & Machine Learning</p>
                     <p class="hero-description">Final year B.Tech student specializing in Electronics and Computer Engineering, with a focus on AI, machine learning, and deep learning. Experienced in federated learning and computer vision.</p>
                     <div class="links">
@@ -954,7 +988,7 @@
         <div class="container">
             <div class="connect-content">
                 <div class="connect-text">
-                    <h2 class="connect-title">Let's Connect</h2>
+                    <h2 class="connect-title"><!-- Text will be typed here --></h2>
                     <p class="connect-description">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!</p>
                     <div class="connect-links">
                         <a href="https://linkedin.com/in/kaavin" class="connect-link" target="_blank">
@@ -976,3 +1010,4 @@
     </section>
 </body>
 </html>
+
