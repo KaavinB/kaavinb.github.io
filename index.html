@@ -131,6 +131,17 @@
             line-height: 1.1;
             margin-bottom: 2rem;
             position: relative;
+            color: transparent;
+            min-height: 5.5rem;
+        }
+
+        .hero-title .typed-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--secondary);
+            width: 100%;
+            height: 100%;
         }
 
         .hero-title::after {
@@ -761,7 +772,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section, .project-item, .tech-stack, .experience-item, .connect-section');
-            const heroTitle = document.querySelector('.hero-title');
+            const heroTitleSpan = document.querySelector('.hero-title .typed-text');
             const heroText = "Kaavin Balasubramanian";
             const connectTitle = document.querySelector('.connect-title');
             const connectText = "Let's Connect";
@@ -772,9 +783,8 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
 
-                        // Check if the intersecting element is the connect section and if typing hasn't started
                         if (entry.target.classList.contains('connect-section') && !connectTitleTyped) {
-                            connectTitleTyped = true; // Mark as started
+                            connectTitleTyped = true;
                             typeWriter(connectTitle, connectText);
                         }
                     }
@@ -788,28 +798,23 @@
                 observer.observe(section);
             });
 
-            // Typing Function
             function typeWriter(element, text, i = 0, callback) {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
-                    setTimeout(() => typeWriter(element, text, i + 1, callback), 80); // Adjusted speed slightly
+                    setTimeout(() => typeWriter(element, text, i + 1, callback), 80);
                 } else {
-                    if (callback) setTimeout(callback, 100); // Delay callback slightly if needed
+                    if (callback) setTimeout(callback, 100);
                 }
             }
 
-            // Clear initial text and start typing animation for Hero Title
-            if(heroTitle) {
-                heroTitle.textContent = '';
-                typeWriter(heroTitle, heroText);
+            if(heroTitleSpan) {
+                typeWriter(heroTitleSpan, heroText);
             }
 
-            // Clear the connect title initially for its animation
             if(connectTitle) {
                 connectTitle.textContent = '';
             }
 
-            // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -830,7 +835,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title"><!-- Text will be typed here --></h1>
+                    <h1 class="hero-title">Kaavin Balasubramanian<span class="typed-text"></span></h1>
                     <p class="hero-subtitle">AI & Machine Learning</p>
                     <p class="hero-description">Final year B.Tech student specializing in Electronics and Computer Engineering, with a focus on AI, machine learning, and deep learning. Experienced in federated learning and computer vision.</p>
                     <div class="links">
@@ -948,7 +953,7 @@
                     <div class="project-content">
                         <div class="project-title">AI-Powered Food Detection</div>
                         <div class="project-description">YOLOv8 to create a sophisticated food detection model capable of identifying thirty-six food items.</div>
-                        <a href="https://github.com/KaavinB/Food_Deploy" class="project-link" target="_blank">View Project</a>
+                        <a href="https://github.com/KaavinB/Food_Calculator" class="project-link" target="_blank">View Project</a>
                     </div>
                 </div>
                 <div class="project-item">
@@ -988,7 +993,7 @@
         <div class="container">
             <div class="connect-content">
                 <div class="connect-text">
-                    <h2 class="connect-title"><!-- Text will be typed here --></h2>
+                    <h2 class="connect-title"></h2>
                     <p class="connect-description">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!</p>
                     <div class="connect-links">
                         <a href="https://linkedin.com/in/kaavin" class="connect-link" target="_blank">
