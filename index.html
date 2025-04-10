@@ -52,6 +52,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-text {
@@ -62,13 +64,33 @@
         .hero-image {
             position: relative;
             z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .hero-image img {
             width: 100%;
+            max-width: 400px;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,51,102,0.1), transparent);
+            z-index: 1;
         }
 
         .hero-title {
@@ -99,6 +121,7 @@
             font-size: 1.2rem;
             max-width: 600px;
             margin-bottom: 3rem;
+            opacity: 0.9;
         }
 
         .section {
@@ -343,13 +366,15 @@
             position: relative;
             z-index: 2;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 4rem;
             align-items: center;
         }
 
         .connect-text {
             max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .connect-title {
@@ -440,6 +465,15 @@
                 margin: 0 auto;
             }
 
+            .hero-image {
+                order: -1;
+                margin-bottom: 2rem;
+            }
+
+            .hero-image img {
+                max-width: 300px;
+            }
+
             .tech-stack {
                 grid-template-columns: 1fr;
             }
@@ -468,24 +502,151 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-image img {
+                max-width: 250px;
+            }
+
+            .section {
+                padding: 4rem 0;
             }
 
             .section-title {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .stack-category {
+                padding: 1.5rem;
+            }
+
+            .category-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .tech-item {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+
+            .project-title {
+                font-size: 1.4rem;
+            }
+
+            .project-description {
+                font-size: 1rem;
+            }
+
+            .project-link {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .experience-item {
+                padding: 1.5rem;
+            }
+
+            .experience-title {
+                font-size: 1.4rem;
+            }
+
+            .experience-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .experience-date {
+                font-size: 0.9rem;
+            }
+
+            .experience-list li {
+                font-size: 1rem;
+                padding-left: 1.5rem;
+            }
+
+            .connect-section {
+                padding: 4rem 0;
+            }
+
+            .connect-title {
+                font-size: 2rem;
+            }
+
+            .connect-description {
+                font-size: 1rem;
+            }
+
+            .connect-link {
+                padding: 1rem;
+            }
+
+            .connect-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .connect-link-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
             }
 
             .tech-grid {
                 grid-template-columns: 1fr;
             }
 
-            .connect-title {
-                font-size: 2.5rem;
+            .project-gallery {
+                gap: 2rem;
             }
 
-            .connect-description {
-                font-size: 1.1rem;
+            .links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .link-item {
+                width: 100%;
+                text-align: center;
+            }
+
+            .connect-links {
+                width: 100%;
+            }
+
+            .connect-link {
+                width: 100%;
             }
         }
     </style>
@@ -641,9 +802,6 @@
                             <span class="connect-link-text">View Résumé</span>
                         </a>
                     </div>
-                </div>
-                <div class="connect-image">
-                    <img src="/static/connect.jpg" alt="Let's Connect">
                 </div>
             </div>
         </div>
