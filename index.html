@@ -185,12 +185,33 @@
             transform: translateY(0);
         }
 
+        /* Individual element initial state for staggering */
+        .stack-category,
+        .project-item,
+        .experience-item,
+        .connect-link {
+            opacity: 0;
+            transform: scale(0.9) translateY(15px); /* Start scaled down and slightly up */
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Visible state for staggered elements */
+        .stack-category.visible,
+        .project-item.visible,
+        .experience-item.visible,
+        .connect-link.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0); /* Scale to full size and original position */
+        }
+
         .section-title {
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 4rem;
             position: relative;
             display: inline-block;
+            /* Animation properties handled by parent .section visibility */
         }
 
         .section-title::after {
@@ -207,14 +228,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 3rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .tech-stack.visible {
-            opacity: 1;
-            transform: translateY(0);
+            /* Removed animation properties - handled by children */
         }
 
         .stack-category {
@@ -222,7 +236,8 @@
             padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease; /* Keep hover effect, separate from entrance */
+            /* Initial animation state defined above */
         }
 
         .stack-category:hover {
@@ -275,6 +290,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 4rem;
+            /* Removed animation properties - handled by children */
         }
 
         .project-item {
@@ -283,14 +299,12 @@
             overflow: hidden;
             background-color: var(--surface);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+             /* Initial animation state defined above */
+             /* Hover effects are separate */
         }
 
-        .project-item.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .project-item:hover .project-image img {
+            transform: scale(1.1);
         }
 
         .project-image {
@@ -304,10 +318,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-        }
-
-        .project-item:hover .project-image img {
-            transform: scale(1.1);
         }
 
         .project-content {
@@ -352,15 +362,8 @@
             border-radius: 20px;
             margin-bottom: 3rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .experience-item.visible {
-            opacity: 1;
-            transform: translateY(0);
+            transition: transform 0.3s ease; /* Keep hover effect, separate from entrance */
+             /* Initial animation state defined above */
         }
 
         .experience-item:hover {
@@ -499,6 +502,7 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+             /* Container, children handle animation */
         }
 
         .connect-link {
@@ -510,7 +514,8 @@
             border-radius: 15px;
             text-decoration: none;
             color: var(--secondary);
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Keep hover effect, separate from entrance */
+            /* Initial animation state defined above */
         }
 
         .connect-link:hover {
@@ -771,7 +776,8 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.section, .project-item, .tech-stack, .experience-item, .connect-section');
+            // Select all parent sections/containers that need observation
+            const animatedContainers = document.querySelectorAll('.section, .connect-section');
             const heroTitleSpan = document.querySelector('.hero-title .typed-text');
             const heroText = "Kaavin Balasubramanian";
             const connectTitle = document.querySelector('.connect-title');
@@ -781,23 +787,53 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        const container = entry.target;
+                        container.classList.add('visible'); // Animate the container itself
 
-                        if (entry.target.classList.contains('connect-section') && !connectTitleTyped) {
-                            connectTitleTyped = true;
-                            typeWriter(connectTitle, connectText);
+                        // Stagger children animation
+                        let delay = 150; // Initial delay in ms
+                        const staggerIncrement = 150; // Delay between each item
+
+                        // Select direct children to stagger based on container type
+                        let childrenToStagger = [];
+                        if (container.id === 'skills') {
+                            childrenToStagger = container.querySelectorAll('.stack-category');
+                        } else if (container.id === 'projects') {
+                            childrenToStagger = container.querySelectorAll('.project-item');
+                        } else if (container.id === 'experience' || container.id === 'education' || container.id === 'publications') {
+                            // These sections have only one direct experience-item
+                            childrenToStagger = container.querySelectorAll('.experience-item');
+                        } else if (container.classList.contains('connect-section')) {
+                            childrenToStagger = container.querySelectorAll('.connect-link');
+                            // Also handle connect title typing
+                            if (!connectTitleTyped) {
+                                connectTitleTyped = true;
+                                typeWriter(connectTitle, connectText);
+                            }
                         }
+
+                        childrenToStagger.forEach(child => {
+                            setTimeout(() => {
+                                child.classList.add('visible');
+                            }, delay);
+                            delay += staggerIncrement;
+                        });
+
+                        // We observed it, no need to keep observing the same container
+                        observer.unobserve(container);
                     }
                 });
             }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0.1, // Adjust threshold if needed
+                rootMargin: '0px 0px -50px 0px' // Start animation slightly before fully visible
             });
 
-            sections.forEach(section => {
-                observer.observe(section);
+            // Observe each container
+            animatedContainers.forEach(container => {
+                observer.observe(container);
             });
 
+            // Typing Function (remains the same)
             function typeWriter(element, text, i = 0, callback) {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
@@ -807,14 +843,17 @@
                 }
             }
 
+            // Start typing animation for Hero Title Span
             if(heroTitleSpan) {
                 typeWriter(heroTitleSpan, heroText);
             }
 
+            // Clear the connect title initially for its animation
             if(connectTitle) {
                 connectTitle.textContent = '';
             }
 
+            // Smooth scroll for anchor links (remains the same)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -953,7 +992,7 @@
                     <div class="project-content">
                         <div class="project-title">AI-Powered Food Detection</div>
                         <div class="project-description">YOLOv8 to create a sophisticated food detection model capable of identifying thirty-six food items.</div>
-                        <a href="https://github.com/KaavinB/Food_Calculator" class="project-link" target="_blank">View Project</a>
+                        <a href="https://github.com/KaavinB/Food_Deploy" class="project-link" target="_blank">View Project</a>
                     </div>
                 </div>
                 <div class="project-item">
@@ -993,7 +1032,7 @@
         <div class="container">
             <div class="connect-content">
                 <div class="connect-text">
-                    <h2 class="connect-title"></h2>
+                    <h2 class="connect-title"><!-- Text will be typed here --></h2>
                     <p class="connect-description">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!</p>
                     <div class="connect-links">
                         <a href="https://linkedin.com/in/kaavin" class="connect-link" target="_blank">
