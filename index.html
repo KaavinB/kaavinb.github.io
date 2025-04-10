@@ -49,7 +49,7 @@
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 4rem;
             align-items: center;
             position: relative;
@@ -67,11 +67,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .hero-image img {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -90,6 +95,17 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(45deg, rgba(255,51,102,0.1), transparent);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,51,102,0.1) 0%, transparent 70%);
             z-index: 1;
         }
 
@@ -477,10 +493,9 @@
             .hero-image {
                 order: -1;
                 margin-bottom: 2rem;
-            }
-
-            .hero-image img {
-                max-width: 300px;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .tech-stack {
@@ -527,8 +542,9 @@
                 font-size: 1rem;
             }
 
-            .hero-image img {
-                max-width: 250px;
+            .hero-image {
+                padding: 1.5rem;
+                max-width: 300px;
             }
 
             .section {
@@ -816,9 +832,6 @@
                             <span class="connect-link-text">View Résumé</span>
                         </a>
                     </div>
-                </div>
-                <div class="connect-image">
-                    <img src="/static/connect.jpg" alt="Kaavin Balasubramanian">
                 </div>
             </div>
         </div>
