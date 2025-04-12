@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Flags to avoid duplicate animations
     let connectTitleTyped = false;
 
+    // Check if mobile or desktop view
+    const isMobile = window.innerWidth <= 768;
+
     // Pre-allocate space for the full text to prevent layout shifts
     if (heroTitleSpan) {
         // Create a hidden element to measure text width
@@ -20,12 +23,28 @@ document.addEventListener('DOMContentLoaded', function() {
         measureSpan.style.fontSize = getComputedStyle(heroTitleSpan).fontSize;
         measureSpan.style.fontFamily = getComputedStyle(heroTitleSpan).fontFamily;
         measureSpan.style.fontWeight = getComputedStyle(heroTitleSpan).fontWeight;
-        measureSpan.textContent = heroText;
-        document.body.appendChild(measureSpan);
         
-        // Set min-width on the span to prevent layout shifts
-        heroTitleSpan.style.minWidth = `${measureSpan.offsetWidth}px`;
-        heroTitleSpan.textContent = '';
+        // Handle name display differently on mobile
+        if (isMobile) {
+            // For mobile, split into first and last name on separate lines
+            const [firstName, lastName] = heroText.split(' ');
+            measureSpan.textContent = firstName;
+            document.body.appendChild(measureSpan);
+            const firstNameWidth = measureSpan.offsetWidth;
+            
+            measureSpan.textContent = lastName;
+            const lastNameWidth = measureSpan.offsetWidth;
+            
+            // Use the wider of the two for width
+            heroTitleSpan.style.minWidth = `${Math.max(firstNameWidth, lastNameWidth)}px`;
+            heroTitleSpan.textContent = '';
+        } else {
+            // Desktop behavior remains the same
+            measureSpan.textContent = heroText;
+            document.body.appendChild(measureSpan);
+            heroTitleSpan.style.minWidth = `${measureSpan.offsetWidth}px`;
+            heroTitleSpan.textContent = '';
+        }
         
         // Clean up
         document.body.removeChild(measureSpan);
