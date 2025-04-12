@@ -11,6 +11,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Flags to avoid duplicate animations
     let connectTitleTyped = false;
 
+    // Pre-allocate space for the full text to prevent layout shifts
+    if (heroTitleSpan) {
+        // Create a hidden element to measure text width
+        const measureSpan = document.createElement('span');
+        measureSpan.style.visibility = 'hidden';
+        measureSpan.style.position = 'absolute';
+        measureSpan.style.fontSize = getComputedStyle(heroTitleSpan).fontSize;
+        measureSpan.style.fontFamily = getComputedStyle(heroTitleSpan).fontFamily;
+        measureSpan.style.fontWeight = getComputedStyle(heroTitleSpan).fontWeight;
+        measureSpan.textContent = heroText;
+        document.body.appendChild(measureSpan);
+        
+        // Set min-width on the span to prevent layout shifts
+        heroTitleSpan.style.minWidth = `${measureSpan.offsetWidth}px`;
+        heroTitleSpan.textContent = '';
+        
+        // Clean up
+        document.body.removeChild(measureSpan);
+    }
+
     // Handle intersection observations for animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
